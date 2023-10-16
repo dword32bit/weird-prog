@@ -1,0 +1,114 @@
+import datetime
+import time
+import os
+
+parkiran = 10
+parkir = []
+
+class prog:
+    global parkiran, parkir
+
+    @staticmethod
+    def menu():
+        print("Selamat datang di parkiran")
+        print("parkiran yang tersedia : ", parkiran)
+        print("1. Parkir")
+        print("2. Keluar")
+        print("3. Exit Program")
+
+    @staticmethod
+    def prog():
+        pilihan = int(input("Masukkan Pilihan anda : "))
+        if pilihan == 1:
+            kendaraan.masuk()
+        elif pilihan == 2:
+            kendaraan.keluar()
+        elif pilihan == 3:
+            print("Terimakasih untuk hari ini.....")
+            exit()
+            os.system("cls")
+        else:
+            Command.error()
+            print("Inputan tidak Valid ! ")
+            prog.prog()
+
+
+class kendaraan:
+    global parkir, parkiran
+
+    @staticmethod
+    def masuk():
+        m = input("Masukkan Plat Nomor kendaraan : ")
+        parkir.append(str(m))
+        print(parkir)
+        parkiran = parkiran -1
+        print("parkiran yang tersedia : ", parkiran)
+        time.sleep(2)
+        return parkiran,parkir
+
+    @staticmethod
+    def keluar():
+        print(parkir)
+        k = input("Masukkan Plat Nomor kendaraan : ")
+        if k not in parkir:
+            Command.error()
+            print("Kendaraan tidak terparkir di parkiran")
+            print("Plat Nomor kendaraan salah")
+            Command.kembali()
+        else:
+            biaya, name = get_cost(k)
+            print("Biaya parkir untuk kendaraan {} adalah: {}".format(name, biaya))
+            parkir.remove(k)
+            parkiran +1
+            time.sleep(2)
+            Command.kembali()
+            return parkir,parkiran
+
+
+class Command:
+    @staticmethod
+    def error():
+        print("|==================================|")
+        print("|  ______                          |")
+        print("| |  ____|                         |")
+        print("| | |__    _ __  _ __  ___   _ __  |")
+        print("| |  __|  | '__|| '__|/ _ \ | '__| |")
+        print("| | |____ | |   | |  | (_) || |    |")
+        print("| |______||_|   |_|   \___/ |_|    |")
+        print("|==================================|")
+
+    @staticmethod
+    def kembali():
+        conf = input("Mau Kembali ke menu ? (y/n): ")
+        if conf == "y":
+            prog.menu()
+            prog.prog()
+        elif conf == "n":
+            Command.error()
+            Command.kembali()
+        else:
+            Command.error()
+            print("Inputan tidak valid !")
+
+
+def get_cost(name):
+    enter = datetime.datetime.now()
+    time.sleep(4)
+    out = datetime.datetime.now()
+
+    time_diff = out - enter
+    hours_diff = time_diff.total_seconds() / 3600
+
+    if hours_diff < 1:
+        return 3000, name
+    elif hours_diff > 24:
+        return 5000, name
+    else:
+        cost = hours_diff * 3000
+        return cost, name
+
+
+while True:
+    prog.menu()
+    prog.prog()
+    os.system("cls")
