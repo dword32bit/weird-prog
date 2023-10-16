@@ -95,8 +95,7 @@ def render_ui():
     '''
     print(menu)
     print("    | Parkiran yang tersedia:", max_parkiran)
-    lanjut = '''
-    | 1. Parkir                               |
+    lanjut = '''    | 1. Parkir                               |
     | 2. Keluar                               |
     | 3. Lihat isi                            |
     | 4. Exit Program                         |
